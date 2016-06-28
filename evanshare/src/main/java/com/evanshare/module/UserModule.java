@@ -1,13 +1,22 @@
 package com.evanshare.module;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Date;
+import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpSession;
 
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.DeploymentBuilder;
 import org.nutz.dao.Cnd;
 import org.nutz.dao.Dao;
 import org.nutz.dao.QueryResult;
 import org.nutz.dao.pager.Pager;
+import org.nutz.ioc.Ioc;
+import org.nutz.ioc.ObjectProxy;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.Strings;
@@ -145,6 +154,27 @@ public class UserModule {
 		if (user.getName() != null)
 			user.setName(user.getName().trim());
 		return null;
+	}
+	
+	@At("/deploy")
+	public void deploy(Ioc ioc) throws FileNotFoundException {
+
+		ProcessEngine processEngine = (ProcessEngine) ioc.get(ObjectProxy.class, "processEngine");
+		System.out.println(processEngine);
+
+		// 创建部署构建器对象，用于加载流程定义文件(UserInfoAudit.bpmn,UserInfoAudit.myProcess.png)，部署流程定义
+		//DeploymentBuilder deploymentBuilder = processEngine.getRepositoryService().createDeployment();
+		//deploymentBuilder.addClasspathResource("UserInfoAudit.zip");
+		DeploymentBuilder createDeployment = processEngine.getRepositoryService()
+				.createDeployment();
+		ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(
+				new File("D:/Repository/evanshare/evanshare/src/main/resources/UserInfoAudit.zip")));
+		createDeployment.addZipInputStream(zipInputStream);
+		//Deployment deployment = deploymentBuilder.deploy();
+		//System.out.println(deployment.getId());
+		Deployment deployment = createDeployment.deploy();
+		System.out.println(deployment.getId());
+
 	}
 
 }

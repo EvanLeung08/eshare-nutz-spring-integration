@@ -8,7 +8,6 @@ import org.nutz.mvc.annotation.SetupBy;
 import org.nutz.mvc.ioc.provider.ComboIocProvider;
 
 import com.evanshare.main.MainSetup;
-import com.evanshare.module.UserModule;
 
 
 @SetupBy(value=MainSetup.class)
@@ -17,5 +16,6 @@ import com.evanshare.module.UserModule;
 @Fail("jsp:jsp.500")
 @Localization(value="msg/", defaultLocalizationKey="zh-CN")
 public class MainModule {
+	
 
 }
