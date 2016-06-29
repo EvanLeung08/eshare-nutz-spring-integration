@@ -21,6 +21,7 @@ import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.lang.Strings;
 import org.nutz.lang.util.NutMap;
+import org.nutz.mvc.View;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Attr;
 import org.nutz.mvc.annotation.By;
@@ -29,6 +30,7 @@ import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 import org.nutz.mvc.filter.CheckSession;
+import org.nutz.mvc.view.JspView;
 
 import com.evanshare.bean.User;
 
@@ -54,14 +56,14 @@ public class UserModule {
 	 */
 	@At
 	@Filters
-	public Object login(@Param("username") String name, @Param("password") String password, HttpSession session) {
+	public View login(@Param("username") String name, @Param("password") String password, HttpSession session) {
 		User user = dao.fetch(User.class, Cnd.where("name", "=", name).and("password", "=", password));
 		if (user == null) {
-			return false;
+		    return new JspView( "/jsp/500" );
 
 		} else {
 			session.setAttribute("me", user.getId());
-			return true;
+			return new JspView( "/page/common/index_menu" );
 		}
 	}
 
@@ -121,7 +123,7 @@ public class UserModule {
 	}
 
 	@At("/")
-	@Ok("jsp:jsp.user.list") // 真实路径是 /WEB-INF/jsp/user/list.jsp
+	@Ok(">>:/")// 真实路径是 /WEB-INF/jsp/user/list.jsp
 	public void index() {
 	}
 
@@ -168,7 +170,7 @@ public class UserModule {
 		DeploymentBuilder createDeployment = processEngine.getRepositoryService()
 				.createDeployment();
 		ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(
-				new File("D:/Repository/evanshare/evanshare/src/main/resources/UserInfoAudit.zip")));
+				new File("D:\\repository\\git\\evanshare\\evanshare\\src\\main\\resources\\UserInfoAudit.zip")));
 		createDeployment.addZipInputStream(zipInputStream);
 		//Deployment deployment = deploymentBuilder.deploy();
 		//System.out.println(deployment.getId());
