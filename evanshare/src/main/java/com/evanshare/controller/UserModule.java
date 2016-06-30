@@ -1,4 +1,4 @@
-package com.evanshare.module;
+package com.evanshare.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,9 +39,7 @@ import com.evanshare.bean.User;
 @Ok("json:{locked:'password|salt',ignoreNull:true}")
 @Fail("http:500")
 @Filters(@By(type = CheckSession.class, args = { "me", "/" }))
-public class UserModule {
-	@Inject
-	protected Dao dao;
+public class UserModule extends BaseModule{
 
 	@At
 	public int count() {
@@ -59,7 +57,7 @@ public class UserModule {
 	public View login(@Param("username") String name, @Param("password") String password, HttpSession session) {
 		User user = dao.fetch(User.class, Cnd.where("name", "=", name).and("password", "=", password));
 		if (user == null) {
-		    return new JspView( "/jsp/500" );
+		    return new JspView( "/page/error/500" );
 
 		} else {
 			session.setAttribute("me", user.getId());
@@ -123,7 +121,7 @@ public class UserModule {
 	}
 
 	@At("/")
-	@Ok(">>:/")// 真实路径是 /WEB-INF/jsp/user/list.jsp
+	@Ok(">>:login")// 真实路径是 /WEB-INF/jsp/user/list.jsp
 	public void index() {
 	}
 

@@ -5,10 +5,11 @@ import java.util.Date;
 import org.nutz.dao.entity.annotation.Column;
 import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Name;
+import org.nutz.dao.entity.annotation.One;
 import org.nutz.dao.entity.annotation.Table;
 
 @Table("TB_AT_USER")
-public class User {
+public class User extends BasePojo{
 	@Id
 	private int id;
 	@Name
@@ -18,10 +19,16 @@ public class User {
 	private String password;
 	@Column
 	private String salt;
-	@Column
-	private Date createTime;
-	@Column
-	private Date updateTime;
+	@One(target=UserProfile.class, field="id", key="userId")
+    protected UserProfile profile;
+	
+	
+	public UserProfile getProfile() {
+		return profile;
+	}
+	public void setProfile(UserProfile profile) {
+		this.profile = profile;
+	}
 	public int getId() {
 		return id;
 	}
@@ -45,18 +52,6 @@ public class User {
 	}
 	public void setSalt(String salt) {
 		this.salt = salt;
-	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
 	}
 	
 	

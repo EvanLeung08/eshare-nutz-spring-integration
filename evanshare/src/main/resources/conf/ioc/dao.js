@@ -1,4 +1,10 @@
-/*var ioc = {
+var ioc = {
+		conf : {
+            type : "org.nutz.ioc.impl.PropertiesProxy",
+            fields : {
+                paths : ["custom/db.properties"]
+            }
+        },
         dataSource : {
             type : "com.alibaba.druid.pool.DruidDataSource",
             events : {
@@ -6,21 +12,23 @@
                 depose : 'close'
             },
             fields : {
-                url : "jdbc:mysql://127.0.0.1:3306/evanshare",
-                username : "root",
-                password : "root",
+                url : {java:"$conf.get('db.url')"},
+                username : {java:"$conf.get('db.username')"},
+                password : {java:"$conf.get('db.password')"},
                 testWhileIdle : true,
-                validationQuery : "select 1" ,
-                maxActive : 100
+                validationQuery : {java:"$conf.get('db.validationQuery')"} ,
+                maxActive : {java:"$conf.get('db.maxActive')"},
+                filters : "mergeStat",
+                connectionProperties : "druid.stat.slowSqlMillis=2000"
             }
         },
         dao : {
             type : "org.nutz.dao.impl.NutDao",
             args : [{refer:"dataSource"}]
         }
-};*/
+};
 
-var ioc = {
+/*var ioc = {
         dataSource : {
             type : "com.alibaba.druid.pool.DruidDataSource",
             events : {
@@ -40,4 +48,4 @@ var ioc = {
             type : "org.nutz.dao.impl.NutDao",
             args : [{refer:"dataSource"}]
         }
-};
+};*/

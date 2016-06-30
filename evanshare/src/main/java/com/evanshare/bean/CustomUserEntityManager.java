@@ -18,7 +18,7 @@ import org.nutz.log.Log;
 import org.nutz.log.Logs;
 import org.nutz.mvc.Mvcs;
 
-import com.evanshare.entity.Sys_user;
+import com.evanshare.entity.SysUser;
 
 /**
  * 用户工厂类
@@ -34,7 +34,7 @@ public class CustomUserEntityManager extends UserEntityManager {
 
         log.info("findUserById:::::::::::::::::::::::::::::::"+userId);
         UserEntity userEntity = new UserEntity();
-        Sys_user sysUser = dao.fetch(Sys_user.class, Cnd.where("uid", "=", userId));
+        SysUser sysUser = dao.fetch(SysUser.class, Cnd.where("uid", "=", userId));
         userEntity.setId(userId);
         userEntity.setFirstName(sysUser.getRealName());
         userEntity.setEmail(sysUser.getEmail());

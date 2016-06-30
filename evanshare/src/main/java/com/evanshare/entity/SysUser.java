@@ -7,8 +7,10 @@ import org.nutz.dao.entity.annotation.Id;
 import org.nutz.dao.entity.annotation.Name;
 import org.nutz.dao.entity.annotation.Table;
 
+import com.evanshare.bean.BasePojo;
+
 @Table("TB_AT_SYS_USER")
-public class Sys_user implements Serializable {
+public class SysUser extends BasePojo implements Serializable {
 	/**
 	 * 
 	 */

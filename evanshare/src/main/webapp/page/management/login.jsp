@@ -4,15 +4,15 @@
         <meta charset="utf-8">
         <title>E分享后台管理系统</title>
         <!-- CSS -->
-        <link rel="stylesheet" href="assets/css/reset.css">
-        <link rel="stylesheet" href="assets/css/supersized.css">
-        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/reset.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/supersized.css">
+        <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/style.css">
 
         <!-- Javascript -->
-        <script src="assets/js/jquery-1.8.2.min.js"></script>
-        <script src="assets/js/supersized.3.2.7.min.js"></script>
-        <script src="assets/js/supersized-init.js"></script>
-        <script src="assets/js/scripts.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/jquery-1.8.2.min.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/supersized.3.2.7.min.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/supersized-init.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/scripts.js"></script>
 
     </head>
 
