@@ -1,6 +1,11 @@
-﻿<!DOCTYPE html>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html lang="en" class="no-js">
     <head>
+    
+    
         <meta charset="utf-8">
         <title>E分享后台管理系统</title>
         <!-- CSS -->
@@ -19,27 +24,28 @@
     <body>
 
         <div class="page-container">
-            <h1>E 分 享</h1>
+            <h1>注册</h1>
             <form action="<%=request.getContextPath()%>/user/login.do" method="post">
-                <input type="text" name="username" class="username" placeholder="用户名">
-                <input type="password" name="password" class="password" placeholder="密码">
-                <button type="submit">登录</button>
-                <button type="button">注册</button>
-                <div class="error"><span>+</span></div>
+                <input type="text" name="user.username" class="username" placeholder="用户名">
+                <input type="password" name="user.password" class="password" placeholder="密码">
+                <input type="text" name="user.email" class="username" placeholder="邮箱">
+                <button type="submit">注册</button>
+                <button id="returnBtn" type="button">返回</button>
             </form>
-            <div class="connect">
-                <p>Or connect with:</p>
-                <p>
-                    <a class="facebook" href="www.facebook.com"></a>
-                    <a class="twitter" href="www.twitter.com"></a>
-                </p>
-            </div>
         </div>
-		
-      
 
     </body>
 
 </html>
-
+<script type="text/javascript">
+$(function(){
+	
+	var root ='<%=request.getContextPath()%>';
+	 $("#returnBtn").click(function(){
+		window.location.href=root+"/user/";
+	});
+	
+	
+})
+</script>
 

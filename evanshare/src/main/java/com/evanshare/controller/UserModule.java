@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpSession;
@@ -38,8 +40,7 @@ import com.evanshare.bean.User;
 @At("/user")
 @Ok("json:{locked:'password|salt',ignoreNull:true}")
 @Fail("http:500")
-@Filters(@By(type = CheckSession.class, args = { "me", "/" }))
-public class UserModule extends BaseModule{
+public class UserModule extends BaseModule {
 
 	@At
 	public int count() {
@@ -47,22 +48,34 @@ public class UserModule extends BaseModule{
 	}
 
 	/**
+	 * 用户登录
+	 * 
 	 * @param name
 	 * @param password
 	 * @param session
 	 * @return
 	 */
 	@At
-	@Filters
 	public View login(@Param("username") String name, @Param("password") String password, HttpSession session) {
 		User user = dao.fetch(User.class, Cnd.where("name", "=", name).and("password", "=", password));
 		if (user == null) {
-		    return new JspView( "/page/error/500" );
-
+			return new JspView("/page/error/500");
 		} else {
 			session.setAttribute("me", user.getId());
-			return new JspView( "/page/common/index_menu" );
+			return new JspView("jsp/common/index_menu");
 		}
+	}
+
+	/**
+	 * 获取用户列表
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@At("/list")
+	public View list(HttpSession session) {
+
+		return new JspView("jsp/user/user_list");
 	}
 
 	@At
@@ -70,6 +83,12 @@ public class UserModule extends BaseModule{
 	public void logout(HttpSession session) {
 		session.invalidate();
 
+	}
+
+	@At("/toRegister")
+	@Ok(">>:/register.jsp")
+	public void toRegister() {
+		System.out.println("toRegister");
 	}
 
 	@At
@@ -85,6 +104,12 @@ public class UserModule extends BaseModule{
 		return re.setv("ok", true).setv("data", user);
 
 	}
+	
+	@At("/toAdd")
+	public View toAdd(HttpSession session) {
+		return new JspView("jsp/user/user_add");
+	}
+	
 
 	@At
 	public Object update(@Param("..") User user) {
@@ -121,7 +146,7 @@ public class UserModule extends BaseModule{
 	}
 
 	@At("/")
-	@Ok(">>:login")// 真实路径是 /WEB-INF/jsp/user/list.jsp
+	@Ok(">>:/login.jsp") // 真实路径是 /WEB-INF/jsp/user/list.jsp
 	public void index() {
 	}
 
@@ -155,7 +180,7 @@ public class UserModule extends BaseModule{
 			user.setName(user.getName().trim());
 		return null;
 	}
-	
+
 	@At("/deploy")
 	public void deploy(Ioc ioc) throws FileNotFoundException {
 
@@ -163,15 +188,15 @@ public class UserModule extends BaseModule{
 		System.out.println(processEngine);
 
 		// 创建部署构建器对象，用于加载流程定义文件(UserInfoAudit.bpmn,UserInfoAudit.myProcess.png)，部署流程定义
-		//DeploymentBuilder deploymentBuilder = processEngine.getRepositoryService().createDeployment();
-		//deploymentBuilder.addClasspathResource("UserInfoAudit.zip");
-		DeploymentBuilder createDeployment = processEngine.getRepositoryService()
-				.createDeployment();
+		// DeploymentBuilder deploymentBuilder =
+		// processEngine.getRepositoryService().createDeployment();
+		// deploymentBuilder.addClasspathResource("UserInfoAudit.zip");
+		DeploymentBuilder createDeployment = processEngine.getRepositoryService().createDeployment();
 		ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(
 				new File("D:\\repository\\git\\evanshare\\evanshare\\src\\main\\resources\\UserInfoAudit.zip")));
 		createDeployment.addZipInputStream(zipInputStream);
-		//Deployment deployment = deploymentBuilder.deploy();
-		//System.out.println(deployment.getId());
+		// Deployment deployment = deploymentBuilder.deploy();
+		// System.out.println(deployment.getId());
 		Deployment deployment = createDeployment.deploy();
 		System.out.println(deployment.getId());
 
