@@ -5,9 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.activiti.engine.ProcessEngine;
@@ -35,12 +37,16 @@ import org.nutz.mvc.filter.CheckSession;
 import org.nutz.mvc.view.JspView;
 
 import com.evanshare.bean.User;
+import com.evanshare.entity.PagerModel;
+import com.evanshare.service.UserService;
 
 @IocBean
 @At("/user")
 @Ok("json:{locked:'password|salt',ignoreNull:true}")
 @Fail("http:500")
 public class UserModule extends BaseModule {
+    @Inject
+    private UserService userService;
 
 	@At
 	public int count() {
@@ -58,12 +64,15 @@ public class UserModule extends BaseModule {
 	@At
 	public View login(@Param("username") String name, @Param("password") String password, HttpSession session) {
 		User user = dao.fetch(User.class, Cnd.where("name", "=", name).and("password", "=", password));
-		if (user == null) {
+	/*	if (user == null) {
 			return new JspView("/page/error/500");
 		} else {
-			session.setAttribute("me", user.getId());
+			session.setAttribute("user", user);
 			return new JspView("jsp/common/index_menu");
-		}
+		}*/
+		
+		return new JspView("jsp/common/index_menu");
+		
 	}
 
 	/**
@@ -73,8 +82,17 @@ public class UserModule extends BaseModule {
 	 * @return
 	 */
 	@At("/list")
-	public View list(HttpSession session) {
-
+	public View list(@Param("pageNum") int pageNum,@Param("numPerPage") int numPerPage ,HttpSession session,HttpServletRequest req) {
+	     QueryResult result  = userService.getUserList(pageNum, numPerPage);
+	    List<User> users =  result.getList(User.class);
+	    PagerModel pager = new PagerModel();
+	    pager.setCurrentPage(pageNum);
+	    pager.setNumPerPage(numPerPage);
+	    pager.setPageNumShown(result.getPager().getPageSize());
+	    pager.setTotalCount(result.getPager().getRecordCount());
+	    pager.setPageSize(result.getPager().getPageSize());
+	    req.setAttribute("users", users);
+	    req.setAttribute("pager", pager);
 		return new JspView("jsp/user/user_list");
 	}
 
@@ -92,16 +110,20 @@ public class UserModule extends BaseModule {
 	}
 
 	@At
-	public Object add(@Param("..") User user) {
-		NutMap re = new NutMap();
-		String msg = checkUser(user, true);
-		if (msg != null) {
-			return re.setv("ok", false).setv("msg", msg);
-		}
-		user.setCreateTime(new Date());
-		user.setUpdateTime(new Date());
-		user = dao.insert(user);
-		return re.setv("ok", true).setv("data", user);
+	@Ok("json")
+	public Object add(@Param("::user.") User user) {
+	    
+        NutMap re = new NutMap();
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        user = dao.insert(user);
+        return re.setv("statusCode", "200")
+                 .setv("message", "添加成功")
+                 .setv("navTabId", "")
+                 .setv("rel", "")
+                 .setv("callbackType", "closeCurrent")
+                 .setv("forwardUrl", "")
+                 .setv("confirmMsg", "");
 
 	}
 	

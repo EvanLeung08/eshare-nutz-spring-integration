@@ -1,15 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%><%@ include file="/include.inc.jsp"%>
-<form id="pagerForm" method="post" action="demo_page1.html">
+<form id="pagerForm" method="post" action="<%=request.getContextPath()%>/user/list">
 	<input type="hidden" name="status" value="${param.status}">
 	<input type="hidden" name="keywords" value="${param.keywords}" />
 	<input type="hidden" name="pageNum" value="1" />
-	<input type="hidden" name="numPerPage" value="${model.numPerPage}" />
+	<input type="hidden" name="numPerPage" value="${pager.numPerPage}" />
 	<input type="hidden" name="orderField" value="${param.orderField}" />
 </form>
 
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/jsp/user/" method="post">
+	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/user/list" method="post">
 	<div class="searchBar">
 		<!--<ul class="searchContent">
 			<li>
@@ -60,7 +60,7 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="<%=request.getContextPath()%>/user/toAdd" target="navTab"><span>添加</span></a></li>
+			<li><a class="add" href="<%=request.getContextPath()%>/user/toAdd" target="dialog" rel="userAdd"><span>添加</span></a></li>
 			<li><a class="delete" href="<%=request.getContextPath()%>/jsp/common/ajaxDone.html?uid={sid_user}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
 			<li><a class="edit" href="<%=request.getContextPath()%>/jsp/user/demo_page4.html?uid={sid_user}" target="navTab"><span>修改</span></a></li>
 			<li class="line">line</li>
@@ -71,42 +71,32 @@
 		<thead>
 			<tr>
 				<th width="80"></th>
-				<th width="120">客户号</th>
-				<th>客户名称</th>
-				<th width="100">客户类型</th>
-				<th width="150">证件号码</th>
-				<th width="80" align="center">信用等级</th>
-				<th width="80">所属行业</th>
-				<th width="80">建档日期</th>
+				<th width="120">用户名</th>
+				<th width="120">用户密码</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr target="sid_user" rel="1">
-				<td>天津农信社</td>
-				<td>A120113196309052434</td>
-				<td>天津市华建装饰工程有限公司</td>
-				<td>联社营业部</td>
-				<td>29385739203816293</td>
-				<td>5级</td>
-				<td>政府机构</td>
-				<td>2009-05-21</td>
-			</tr>
-			
+			<c:forEach items="${users}" var="user" varStatus="var">
+				<tr target="sid_user" rel="1">
+					<td>用户信息</td>
+					<td>${user.name }</td>
+					<td>${user.password }</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	<div class="panelBar">
 		<div class="pages">
 			<span>显示</span>
 			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
-				<option value="20">20</option>
-				<option value="50">50</option>
-				<option value="100">100</option>
-				<option value="200">200</option>
+			<c:forEach begin="20" end="40" step="10" varStatus="s">
+				<option value="${s.index}" ${pager.pageSize eq s.index ? 'selected="selected"' : ''}>${s.index}</option>
+			</c:forEach>
 			</select>
-			<span>条，共${totalCount}条</span>
+			<span>条，共${pager.totalCount}条</span>
 		</div>
 
-		<div class="pagination" targetType="navTab" totalCount="200" numPerPage="20" pageNumShown="10" currentPage="1"></div>
+		<div class="pagination" targetType="navTab" totalCount="${pager.totalCount}" numPerPage="${pager.numPerPage}" pageNumShown="${pager.pageNumShown}" currentPage="${pager.currentPage}"></div>
 
 	</div>
 </div>
