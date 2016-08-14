@@ -82,8 +82,8 @@ public class UserModule extends BaseModule {
 	 * @return
 	 */
 	@At("/list")
-	public View list(@Param("pageNum") int pageNum,@Param("numPerPage") int numPerPage ,HttpSession session,HttpServletRequest req) {
-	     QueryResult result  = userService.getUserList(pageNum, numPerPage);
+	public View list(@Param("pageNum") int pageNum,@Param("numPerPage") int numPerPage ,@Param("keyword") String keyword,HttpSession session,HttpServletRequest req) {
+	     QueryResult result  = userService.getUserList(pageNum, numPerPage,keyword);
 	    List<User> users =  result.getList(User.class);
 	    PagerModel pager = new PagerModel();
 	    pager.setCurrentPage(pageNum);

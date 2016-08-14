@@ -100,6 +100,12 @@ $(function(){
 							</li>
 							
 						</ul>
+						<ul class="tree treeFolder">
+							<li><a href="<%=request.getContextPath() %>/sql/sql_query" target="navTab" rel="sql_query">SQL查询</a></li>
+								</ul>
+							</li>
+							
+						</ul>
 					</div>
 					<div class="accordionHeader">
 						<h2><span>Folder</span>典型页面</h2>
