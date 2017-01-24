@@ -2,7 +2,7 @@ var ioc = {
 		conf : {
             type : "org.nutz.ioc.impl.PropertiesProxy",
             fields : {
-                paths : ["custom/db.properties"]
+                paths : ["conf/custom/db.properties"]
             }
         },
         dataSource : {
@@ -12,6 +12,7 @@ var ioc = {
                 depose : 'close'
             },
             fields : {
+                driverClassName : {java :"$conf.get('db.driver')"},
                 url : {java:"$conf.get('db.url')"},
                 username : {java:"$conf.get('db.username')"},
                 password : {java:"$conf.get('db.password')"},

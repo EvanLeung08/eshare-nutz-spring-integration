@@ -13,7 +13,6 @@ import org.activiti.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.activiti.engine.impl.interceptor.SessionFactory;
 import org.nutz.dao.Dao;
 import org.nutz.dao.util.Daos;
-import org.nutz.integration.quartz.NutQuartzCronJobFactory;
 import org.nutz.ioc.Ioc;
 import org.nutz.ioc.Ioc2;
 import org.nutz.ioc.ObjectProxy;
@@ -50,7 +49,7 @@ public class MainSetup implements Setup{
 		
 		activitiInit(conf);
 		
-		 ioc.get(NutQuartzCronJobFactory.class);
+//		 ioc.get(NutQuartzCronJobFactory.class);
 		
 	}
 

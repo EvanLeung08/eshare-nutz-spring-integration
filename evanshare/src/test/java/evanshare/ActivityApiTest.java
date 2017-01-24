@@ -13,6 +13,7 @@ import org.nutz.mvc.annotation.IocBy;
 
 import com.evanshare.MainModule;
 
+
 public class ActivityApiTest extends Assert {
 
 protected Ioc ioc;
