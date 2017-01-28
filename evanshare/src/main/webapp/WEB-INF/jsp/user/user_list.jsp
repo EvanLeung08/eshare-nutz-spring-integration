@@ -11,23 +11,6 @@
 <div class="pageHeader">
 	<form onsubmit="return navTabSearch(this);" action="<%=request.getContextPath()%>/user/list" method="post">
 	<div class="searchBar">
-		<!--<ul class="searchContent">
-			<li>
-				<label>我的客户：</label>
-				<input type="text"/>
-			</li>
-			<li>
-			<select class="combox" name="province">
-				<option value="">所有省市</option>
-				<option value="北京">北京</option>
-				<option value="上海">上海</option>
-				<option value="天津">天津</option>
-				<option value="重庆">重庆</option>
-				<option value="广东">广东</option>
-			</select>
-			</li>
-		</ul>
-		-->
 		<table class="searchContent">
 			<tr>
 				<td>
@@ -48,10 +31,7 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<li><a class="add" href="<%=request.getContextPath()%>/user/toAdd" target="dialog" rel="userAdd"><span>添加</span></a></li>
-			<li><a class="delete" href="<%=request.getContextPath()%>/jsp/common/ajaxDone.html?uid={sid_user}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
-			<li><a class="edit" href="<%=request.getContextPath()%>/jsp/user/demo_page4.html?uid={sid_user}" target="navTab"><span>修改</span></a></li>
 			<li class="line">line</li>
-			<li><a class="icon" href="<%=request.getContextPath()%>/jsp/common/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="138">

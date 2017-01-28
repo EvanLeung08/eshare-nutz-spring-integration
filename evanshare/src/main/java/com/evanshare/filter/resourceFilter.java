@@ -18,13 +18,14 @@ import org.nutz.mvc.NutFilter;
  * @author lyh
  *
  */
-public class resourceFilter extends NutFilter {
+public class ResourceFilter extends NutFilter {
 	protected Set<String> prefixs = new HashSet<String>();
 	@Override
 	public void init(FilterConfig conf) throws ServletException {
 		super.init(conf);
         prefixs.add(conf.getServletContext().getContextPath() + "/druid/");
-        prefixs.add(conf.getServletContext().getContextPath() + "/rs/");
+		//对请求路径带有/spring/过滤
+		prefixs.add(conf.getServletContext().getContextPath() + "/spring/");
 	}
 
 	@Override
@@ -41,8 +42,6 @@ public class resourceFilter extends NutFilter {
 	        }
 	        super.doFilter(req, resp, chain);
 	}
-	
-	
-	
+
 
 }

@@ -71,11 +71,6 @@ $(function(){
 			<div id="navMenu">
 				<ul>
 					<li class="selected"><a href="<%=request.getContextPath() %>/menu/sidebar_1"><span>资讯管理</span></a></li>
-					<li><a href="sidebar_2.html"><span>订单管理</span></a></li>
-					<li><a href="sidebar_1.html"><span>产品管理</span></a></li>
-					<li><a href="sidebar_2.html"><span>会员管理</span></a></li>
-					<li><a href="sidebar_1.html"><span>服务管理</span></a></li>
-					<li><a href="sidebar_2.html"><span>系统设置</span></a></li>
 				</ul>
 			</div>
 		</div>
@@ -106,26 +101,17 @@ $(function(){
 							</li>
 							
 						</ul>
-					</div>
-					<div class="accordionHeader">
-						<h2><span>Folder</span>典型页面</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree treeFolder treeCheck">
-							<li><a href="demo_page1.html" target="navTab" rel="demo_page1">查询我的客户</a></li>
-							
+						<ul class="tree treeFolder">
+							<li><a href="<%=request.getContextPath() %>/spring/user/list" target="navTab" rel="spring_user_list">基于Srping实现用户列表</a></li>
 						</ul>
-					</div>
-					<div class="accordionHeader">
-						<h2><span>Folder</span>流程演示</h2>
-					</div>
-					<div class="accordionContent">
-						<ul class="tree">
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page">列表</a></li>
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page">列表</a></li>
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page2">列表</a></li>
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page2">列表</a></li>
-							<li><a href="newPage1.html" target="dialog" rel="dlg_page2">列表</a></li>
+						</li>
+
+						</ul>
+						<ul class="tree treeFolder">
+							<li><a href="<%=request.getContextPath() %>/spring/sql/sql_query" target="navTab" rel="springsql_query">基于Spring实现SQL查询</a></li>
+						</ul>
+						</li>
+
 						</ul>
 					</div>
 				</div>
@@ -165,7 +151,7 @@ $(function(){
 							<iframe width="100%" height="430" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?width=0&height=430&fansRow=2&ptype=1&speed=300&skin=1&isTitle=0&noborder=1&isWeibo=1&isFans=0&uid=1739071261&verifier=c683dfe7"></iframe>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
