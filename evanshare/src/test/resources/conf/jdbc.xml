@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    <!-- druid-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}" />
+        <property name="password" value="${db.password}"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="validationQuery" value="${db.validationQuery}"/>
+        <property name="maxActive" value="${db.maxActive}"/>
+        <property name="connectionProperties" value="druid.stat.slowSqlMillis=2000"/>
+    </bean>
+
+</beans>
